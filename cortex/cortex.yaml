@@ -1,0 +1,12 @@
+- name: pets-classifier
+  kind: RealtimeAPI
+  predictor:
+    type: python
+    path: predictor.py
+    config:
+      bucket: emotion-ai-test
+      key: model.pkl
+      device: cuda
+  compute:
+    cpu: 1
+    gpu: 1

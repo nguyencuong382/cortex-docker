@@ -1,0 +1,31 @@
+version: "2.3"
+
+services:
+    cortex-docker:
+        build:
+          context: .
+          dockerfile: Dockerfile
+        runtime: nvidia
+        environment:
+          CUDA_VISIBLE_DEVICES: 1
+          CORTEX_VERSION: 0.25.0
+          CORTEX_SERVING_PORT: "5000"
+          CORTEX_PROVIDER: "local"
+          CORTEX_CACHE_DIR: "/mnt/cache"
+          CORTEX_MODEL_DIR: "/mnt/model"
+          CORTEX_MODELS: ""
+          CORTEX_API_SPEC: "/mnt/project/cortex.json"
+          CORTEX_PROJECT_DIR: "/mnt/project"
+          CORTEX_PROCESSES_PER_REPLICA: 1
+          CORTEX_THREADS_PER_PROCESS: 1
+          CORTEX_THREADS_PER_PROCES: 1
+          AWS_REGION: us-east-1
+          CORTEX_KIND: RealtimeAPI
+          CORTEX_MAX_REPLICA_CONCURRENCY: 4096
+          CORTEX_SO_MAX_CONN: 1124
+          PYTHONDONTWRITEBYTECODE: 1
+        ports:
+            - "6000:5000"
+        volumes:
+          # - ./keras:/root/.keras # Mouting if using keras model
+          - ./cortex:/mnt/project
